@@ -74,7 +74,7 @@ public class TransactionDaoImpl implements TransactionDao {
 		return bal;
 	}
 
-	public int fundTransfer(int fromAccountNo, int toaccountNo, int amount, int balance) {
+	public int fundTransfer(int fromAccountNo, int toaccountNo, int amount) {
 		// TODO Auto-generated method stub
 		int toBalance = 0;
 		int fromBalance = 0;

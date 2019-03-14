@@ -144,7 +144,7 @@ public class MainUI {
 					int tAmt = scan.nextInt();
 					System.out.println("Enter the account no to which you want to transfer the money");
 					int toAccNo = scan.nextInt();
-					int details = transaction.fundTransfer(u.getAccountNo(), toAccNo, tAmt, u.getBalance());
+					int details = transaction.fundTransfer(u.getAccountNo(), toAccNo, tAmt);
 					if(details != 0)
 					System.out.println(tAmt+" Rs/- of money is transferred from "+u.getAccountNo()+" to "+toAccNo);
 					break;

@@ -21,9 +21,9 @@ public class TransactionServiceImpl implements TransactionService {
 		return td.showBalance(accountNo);
 	}
 
-	public int fundTransfer(int fromAccountNo, int toaccountNo, int amount, int balance) {
+	public int fundTransfer(int fromAccountNo, int toaccountNo, int amount) {
 		// TODO Auto-generated method stub
-		return td.fundTransfer(fromAccountNo, toaccountNo, amount, balance);
+		return td.fundTransfer(fromAccountNo, toaccountNo, amount);
 	}
 	
 
