@@ -8,6 +8,7 @@ import java.sql.Statement;
 
 
 import com.cg.ba.utility.Database;
+import com.cg.ba.utility.InsufficientBalanceException;
 import com.cg.ba.utility.InvalidIdException;
 
 public class TransactionDaoImpl implements TransactionDao {
@@ -26,7 +27,12 @@ public class TransactionDaoImpl implements TransactionDao {
             }
         }
 		if(c == 1)
-		return balance;
+		{
+			if(balance == 0)
+				return 1;
+			else
+				return balance;
+		}
 		else
 			return 0;
 	}
@@ -98,15 +104,21 @@ public class TransactionDaoImpl implements TransactionDao {
 			st.close();
 			if(c == 1)
 			{
-				i = insertAmt(fromAccountNo,toaccountNo,amount);
-				if(i == 1)
+				if(fromBalance >= amount)
 				{
-					toBalance += amount;
-					fromBalance -= amount;
-					updateBalance(fromBalance, fromAccountNo);
-					updateBalance(toBalance, toaccountNo);
+					i = insertAmt(fromAccountNo,toaccountNo,amount);
+					if(i == 1)
+					{
+						toBalance += amount;
+						fromBalance -= amount;
+						updateBalance(fromBalance, fromAccountNo);
+						updateBalance(toBalance, toaccountNo);
+					}
 				}
-				
+				else
+				{
+					throw new InsufficientBalanceException();
+				}
 			}	
 			else
 			{
@@ -120,8 +132,13 @@ public class TransactionDaoImpl implements TransactionDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (InsufficientBalanceException e) {
+			// TODO Auto-generated catch block
+			
 		} 
-		return i;
+		if(fromBalance != 0)
+		return fromBalance;
+		else return 1;
 	}
 
 	private int insertAmt(int fromAccountNo, int toaccountNo, int amount) {

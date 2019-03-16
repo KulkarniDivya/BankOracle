@@ -133,8 +133,13 @@ public class MainUI {
 					int balance1 = transaction.deposit(u.getAccountNo(), dAmt, u.getBalance());
 					if(balance1 != 0)
 					{
+						if(balance1 != 1) {
+							u.setBalance(balance1);
+						}
+						else
+							u.setBalance(0);
 						System.out.println("Deposit done");
-						u.setBalance(balance1);
+						
 					}
 					break;
 			case 3: int bal = transaction.showBalance(u.getAccountNo());
@@ -146,7 +151,11 @@ public class MainUI {
 					int toAccNo = scan.nextInt();
 					int details = transaction.fundTransfer(u.getAccountNo(), toAccNo, tAmt);
 					if(details != 0)
-					System.out.println(tAmt+" Rs/- of money is transferred from "+u.getAccountNo()+" to "+toAccNo);
+					{
+						System.out.println(tAmt+" Rs/- of money is transferred from "+u.getAccountNo()+" to "+toAccNo);
+						u.setBalance(details);
+					}
+					
 					break;
 			case 5:System.out.println("Thank You");
 					System.exit(0);
